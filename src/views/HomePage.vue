@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <ion-page>
     <ion-header>
       <ion-toolbar>
@@ -61,4 +61,4 @@ async function seConnecter() {
     alert(errorMessage)
   }
 }
-</script>
+</script> -->

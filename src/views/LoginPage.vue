@@ -47,7 +47,7 @@ async function seConnecter() {
       password.value.trim()
     )
     alert("Connexion réussie !")
-    router.push('/tabs')
+    router.push('/firebasedatastore')
   } catch (error: any) {
     const errorCode = error.code
     let errorMessage = "Email ou mot de passe incorrect."
