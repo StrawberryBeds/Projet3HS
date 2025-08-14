@@ -1,11 +1,11 @@
 
 ** Lien vers repositoire GitHUB ** 
 
-
+https://github.com/StrawberryBeds/Projet3HS
 
 ** Lien vers la branch dev ** 
 
-
+https://github.com/StrawberryBeds/Projet3HS/tree/dev
 
 ** Pour récuperer la dernière version de dev ** 
 
