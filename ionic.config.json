@@ -1,0 +1,7 @@
+{
+  "name": "Projet3HS",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
