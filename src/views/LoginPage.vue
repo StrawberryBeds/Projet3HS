@@ -24,21 +24,29 @@ import {
   IonInput,
   IonButton
 } from '@ionic/vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useAuth } from '@/components/useAuth'
 import { useRouter } from 'vue-router'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { firebaseApp } from '@/services/firebaseConfig'
 
 const email = ref('')
 const password = ref('')
+const { user } = useAuth()
 const router = useRouter()
+
+// Redirect if already logged in
+watch(user, (currentUser) => {
+  if (currentUser) {
+    router.push('/firebasedatastore')
+  }
+}, { immediate: true })
 
 async function seConnecter() {
   if (!email.value || !password.value) {
     alert("Veuillez remplir tous les champs.")
     return
   }
-
   const auth = getAuth(firebaseApp)
   try {
     await signInWithEmailAndPassword(
@@ -47,7 +55,7 @@ async function seConnecter() {
       password.value.trim()
     )
     alert("Connexion réussie !")
-    router.push('/firebasedatastore')
+    // No need to manually redirect here, the watcher will handle it
   } catch (error: any) {
     const errorCode = error.code
     let errorMessage = "Email ou mot de passe incorrect."

@@ -27,18 +27,27 @@ import {
   IonInput,
   IonButton
 } from '@ionic/vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useAuth } from '@/components/useAuth' // Make sure the path is correct
 import { useRouter } from 'vue-router'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import { getFirestore, doc, setDoc } from "firebase/firestore"
 import { firebaseApp } from '@/services/firebaseConfig'
-import { getFirestore, doc, setDoc } from 'firebase/firestore'
 
+const { user } = useAuth()
 const router = useRouter()
 const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
 const password = ref('')
 const passwordConfirmation = ref('')
+
+watch(user, (currentUser) => {
+  if (currentUser) {
+    router.push('/tabs')
+  }
+}, { immediate: true })
+
 
 async function inscrire() {
   if (!firstName.value || !lastName.value || !email.value || !password.value || !passwordConfirmation.value) {
@@ -50,23 +59,21 @@ async function inscrire() {
     return
   }
 
-  const auth = getAuth(firebaseApp)
+    const auth = getAuth(firebaseApp)
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email.value.trim(),
       password.value.trim()
     )
-
     const db = getFirestore(firebaseApp)
     await setDoc(doc(db, 'users', userCredential.user.uid), {
       firstName: firstName.value.trim(),
       lastName: lastName.value.trim(),
       email: email.value.trim()
     })
-    // Optionally, you can save firstName and lastName to Firestore or another database here.
     alert('Compte créé avec succès!')
-    router.push('/tabs')
+    // No need to manually redirect here, the watcher will handle it
   } catch (error: any) {
     const errorCode = error.code
     let errorMessage = 'Une erreur est survenue.'
