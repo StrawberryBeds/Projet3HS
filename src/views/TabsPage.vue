@@ -8,28 +8,23 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-
     <ion-tabs>
-      <!-- Outlet obligatoire pour afficher les enfants -->
       <ion-router-outlet></ion-router-outlet>
-
-      <!-- Barre d’onglets -->
       <ion-tab-bar slot="bottom">
-        <ion-tab-button :to="{ path: '/tabs/actives' }">
+        <ion-tab-button tab="actives" href="/tabs/actives">
           <ion-label>Actives</ion-label>
         </ion-tab-button>
-
-        <ion-tab-button :to="{ path: '/tabs/fermees' }">
+        <ion-tab-button tab="fermees" href="/tabs/fermees">
           <ion-label>Fermées</ion-label>
         </ion-tab-button>
-
-        <ion-tab-button :to="{ path: '/tabs/archivees' }">
+        <ion-tab-button tab="archivees" href="/tabs/archivees">
           <ion-label>Archivées</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
 </template>
+
 
 <script setup lang="ts">
 import { IonPage, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonLabel, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons } from '@ionic/vue'

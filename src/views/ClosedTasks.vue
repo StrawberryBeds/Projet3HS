@@ -13,7 +13,7 @@
             <h2>{{ task.title }}</h2>
             <p>{{ task.description }}</p>
             <p>Créé par: {{ task.ownerName }}</p>
-            <p>Status: {{ task.status }}</p>
+            <p>Statut: {{ task.statut }}</p>
             <p>Date: {{ task.createdAt }}</p>
           </ion-label>
 
@@ -49,20 +49,20 @@ async function fetchTasks() {
   const querySnapshot = await getDocs(q)
   tasks.value = querySnapshot.docs
     .map(doc => ({ taskId: doc.id, ...doc.data() }))
-    .filter(t => t.status === 'fermee')
+    .filter(t => t.statut === 'fermee')
 }
 
 // Réouvrir une tâche
 async function reopenTask(task: any) {
   if (task.ownerId !== userId.value) return alert("Vous ne pouvez modifier que vos propres tâches")
-  await updateDoc(doc(db, 'tasks', task.taskId), { status: 'active' })
+  await updateDoc(doc(db, 'tasks', task.taskId), { statut: 'active' })
   fetchTasks()
 }
 
 // Archiver une tâche
 async function archiveTask(task: any) {
   if (task.ownerId !== userId.value) return alert("Vous ne pouvez modifier que vos propres tâches")
-  await updateDoc(doc(db, 'tasks', task.taskId), { status: 'archivee' })
+  await updateDoc(doc(db, 'tasks', task.taskId), { statut: 'archivee' })
   fetchTasks()
 }
 </script>

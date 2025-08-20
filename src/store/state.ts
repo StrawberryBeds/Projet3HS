@@ -13,7 +13,8 @@ export interface Task {
   ownerId: string
   title: string
   description: string
-  isDone: boolean
+  statut: string
+  // isDone: boolean
   date: string 
 }
 
@@ -59,7 +60,7 @@ export function logoutUser(): void {
   state.currentUser = null
 }
 
-export function createTask(title: string, description: string): void {
+export function createTask(title: string, description: string, statut: string): void {
   if (!state.currentUser) return
 
   const newTask: Task = {
@@ -67,19 +68,19 @@ export function createTask(title: string, description: string): void {
     ownerId: state.currentUser.userId,
     title,
     description,
-    isDone: false,
+    statut,
     date: new Date().toISOString().slice(0, 19).replace('T', ' ')
   }
 
   state.tasks.push(newTask)
 }
 
-export function updateTask(taskId: string, updates: Partial<Pick<Task, 'title' | 'description' | 'isDone'>>): void {
+export function updateTask(taskId: string, updates: Partial<Pick<Task, 'title' | 'description' | 'statut'>>): void {
   const task = state.tasks.find(t => t.taskId === taskId && t.ownerId === state.currentUser?.userId)
   if (task) {
     if (updates.title !== undefined) task.title = updates.title
     if (updates.description !== undefined) task.description = updates.description
-    if (updates.isDone !== undefined) task.isDone = updates.isDone
+    if (updates.statut !== undefined) task.statut = updates.statut
   }
 }
 

@@ -13,16 +13,16 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/login', name: 'Login', component: LoginPage },
   { path: '/register', name: 'Register', component: RegisterPage },
   { path: '/forgot-password', name: 'ForgotPassword', component: ForgotPasswordPage },
-  {
-    path: '/tabs',
-    component: TabsPage,
-    children: [
-      { path: 'actives', component: ActiveTasks },
-      { path: 'fermees', component: ClosedTasks },
-      { path: 'archivees', component: ArchivedTasks },
-      { path: '', redirect: 'actives' } // onglet par défaut
-    ]
-  }
+{
+  path: '/tabs',
+  component: TabsPage,
+  children: [
+    { path: 'actives', name: 'actives', component: ActiveTasks },
+    { path: 'fermees', name: 'fermees', component: ClosedTasks },
+    { path: 'archivees', name: 'archivees', component: ArchivedTasks },
+    { path: '', redirect: 'actives' }
+  ]
+}
 ];
 
 const router = createRouter({

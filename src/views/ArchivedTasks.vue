@@ -14,7 +14,7 @@
             <p>{{ task.description }}</p>
             <p>Créé par: {{ task.ownerName }}</p>
             <p>Date: {{ task.createdAt }}</p>
-            <p>Status: {{ task.status }}</p>
+            <p>Statut: {{ task.statut }}</p>
           </ion-label>
 
           <ion-button
@@ -55,13 +55,13 @@ async function fetchTasks() {
   const querySnapshot = await getDocs(q)
   tasks.value = querySnapshot.docs
     .map(doc => ({ taskId: doc.id, ...doc.data() }))
-    .filter(t => t.status === 'archivee')
+    .filter(t => t.statut === 'archivee')
 }
 
 // Réactiver une tâche (admin seulement)
 async function unarchiveTask(task: any) {
   if (!isAdmin.value) return alert("Seul un admin peut modifier cette tâche")
-  await updateDoc(doc(db, 'tasks', task.taskId), { status: 'fermee' })
+  await updateDoc(doc(db, 'tasks', task.taskId), { statut: 'fermee' })
   fetchTasks()
 }
 </script>
