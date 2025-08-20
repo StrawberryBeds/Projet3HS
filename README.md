@@ -1,3 +1,6 @@
+** Lien vers le deploy Firebase **
+
+https://projet3hs.web.app/login
 
 ** Lien vers repositoire GitHUB ** 
 

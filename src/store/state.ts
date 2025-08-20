@@ -11,6 +11,7 @@ export interface User {
 export interface Task {
   taskId: string
   ownerId: string
+  ownerName: string
   title: string
   description: string
   statut: string
@@ -66,6 +67,7 @@ export function createTask(title: string, description: string, statut: string): 
   const newTask: Task = {
     taskId: Date.now().toString(),
     ownerId: state.currentUser.userId,
+    ownerName: state.currentUser.firstName,
     title,
     description,
     statut,
