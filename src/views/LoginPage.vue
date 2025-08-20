@@ -10,6 +10,9 @@
       <ion-input v-model="password" label="Mot de passe" type="password" required></ion-input>
       <ion-button expand="block" @click="seConnecter">Se connecter</ion-button>
       <ion-button expand="block" fill="clear" router-link="/register">Créer un compte</ion-button>
+      <ion-button expand="block" fill="clear" router-link="/forgot-password">
+        Mot de passe oublié ?
+      </ion-button>
     </ion-content>
   </ion-page>
 </template>
@@ -35,13 +38,6 @@ const password = ref('')
 const { user } = useAuth()
 const router = useRouter()
 
-// Redirect if already logged in
-watch(user, (currentUser) => {
-  if (currentUser) {
-    router.push('/firebasedatastore')
-  }
-}, { immediate: true })
-
 async function seConnecter() {
   if (!email.value || !password.value) {
     alert("Veuillez remplir tous les champs.")
@@ -55,15 +51,15 @@ async function seConnecter() {
       password.value.trim()
     )
     alert("Connexion réussie !")
-    // No need to manually redirect here, the watcher will handle it
+    // Redirection manuelle après connexion
+    router.push('/tabs')  // <-- ici on redirige directement vers /tabs
   } catch (error: any) {
-    const errorCode = error.code
     let errorMessage = "Email ou mot de passe incorrect."
-    if (errorCode === 'auth/user-not-found') {
+    if (error.code === 'auth/user-not-found') {
       errorMessage = "Aucun utilisateur trouvé avec cet email."
-    } else if (errorCode === 'auth/wrong-password') {
+    } else if (error.code === 'auth/wrong-password') {
       errorMessage = "Mot de passe incorrect."
-    } else if (errorCode === 'auth/invalid-email') {
+    } else if (error.code === 'auth/invalid-email') {
       errorMessage = "Adresse email invalide."
     }
     alert(errorMessage)
